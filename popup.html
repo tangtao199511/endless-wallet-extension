@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Endless Wallet</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div id="background">
+      <div class="glow"></div>
+        <style>
+          #logo {
+            width: 200px;
+            height: auto;
+            margin-bottom: 20px;
+          }
+        html, body {
+          width: 380px;
+          height: 600px;
+          margin: 0;
+          padding: 0;
+          font-family: sans-serif;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        #app {
+          text-align: center;
+          width: 90%;
+        }
+
+        button {
+          padding: 10px 20px;
+          font-size: 16px;
+          margin-top: 12px;
+          cursor: pointer;
+        }
+
+        .info {
+          margin-top: 20px;
+          font-size: 14px;
+          word-break: break-word;
+          background: #f3f3f3;
+          padding: 10px;
+          border-radius: 6px;
+        }
+
+        .label {
+          font-weight: bold;
+        }
+
+        #transaction-list {
+          text-align: left;
+          font-size: 13px;
+          margin-top: 10px;
+          max-height: 150px;
+          overflow-y: auto;
+          padding-left: 16px;
+          line-height: 1.4;
+        }
+
+        #transaction-list li {
+          margin-bottom: 6px;
+        }
+
+        #openai-key-box {
+          margin-top: 8px;
+          display: none;
+        }
+
+        #openai-key {
+          width: 100%;
+          padding: 6px;
+          margin-top: 4px;
+        }
+  </style>
+      
+    
+    </div>
+    </div>
+    <div id="app">
+      <img src="endless-logo2.png" alt="Endless Logo" id="logo" />
+      <h2>Endless Wallet</h2>
+      <button id="connect-btn" class="btn">Connect Wallet</button>
+
+      <div id="wallet-info" style="display: none;" class="info">
+        <div>
+          <span class="label">Address:</span>
+          <span id="wallet-address"></span>
+          <button id="copy-address">📋</button>
+          <span id="copy-confirm" style="display: none; margin-left: 6px; color: green;">Copied!</span>
+        </div>
+        <div><span class="label">Network:</span> <span id="network"></span></div>
+        <div><span class="label">Balance:</span> <span id="balance">--</span> EDS</div>
+
+        <button id="generate-report-btn" class="btn">📊 Generate AI Report</button>
+        <div id="report-result" class="report-box"></div>
+
+        <div class="ai-section">
+          <label for="ai-provider" class="label">Select AI Provider:</label>
+          <select id="ai-provider">
+            <option value="openai">OpenAI</option>
+            <option value="ollama">Ollama (maintaining)</option>
+          </select>
+        </div>
+
+        <div id="openai-key-box">
+          <label for="openai-key" class="label">OpenAI API Key:</label>
+          <input id="openai-key" type="password" placeholder="sk-..." />
+        </div>
+
+        <div>
+          <span class="label">Recent Transactions:</span>
+          <ul id="transaction-list"></ul>
+        </div>
+
+        <button id="sign-message-btn" class="btn">Sign Message</button>
+        <button id="disconnect-btn" class="btn">Disconnect</button>
+      </div>
+    </div>
+
+    <script type="module" src="./src/popup.ts"></script>
+  </body>
+</html>
