@@ -9,6 +9,10 @@ import {
   UserResponseStatus
 } from "@endlesslab/endless-web3-sdk";
 
+// SDK 实例
+const web3sdk = new EndlessJsSdk({ network: Network.TESTNET });
+const tsClient = new Endless(new EndlessConfig({ network: Network.TESTNET }));
+
 // DOM 元素获取
 const connectBtn = document.getElementById("connect-btn")!;
 const disconnectBtn = document.getElementById("disconnect-btn")!;
@@ -19,30 +23,45 @@ const walletAddressDisplay = document.getElementById("wallet-address")!;
 const networkDisplay = document.getElementById("network")!;
 const balanceDisplay = document.getElementById("balance")!;
 const reportBtn = document.getElementById("generate-report-btn")!;
+const futureBtn = document.getElementById("future-fn-btn")!;
 const reportResult = document.getElementById("report-result")!;
 const transactionList = document.getElementById("transaction-list")!;
 const aiProviderSelect = document.getElementById("ai-provider") as HTMLSelectElement;
 const openaiKeyInput = document.getElementById("openai-key") as HTMLInputElement;
 const openaiKeyBox = document.getElementById("openai-key-box")!;
-
-// SDK 实例
-const web3sdk = new EndlessJsSdk({ network: Network.TESTNET });
-const tsClient = new Endless(new EndlessConfig({ network: Network.TESTNET }));
-
-let connectedAddress: string | null = null;
-
+const logoImg = document.getElementById("logo")!;
+// 📋 点击复制地址按钮
+const copyConfirm = document.getElementById("copy-confirm")!
 // 从本地存储加载 OpenAI API key
 const savedOpenAIKey = localStorage.getItem("openai_api_key");
 if (savedOpenAIKey) {
   openaiKeyInput.value = savedOpenAIKey;
 }
 
+
+let connectedAddress: string | null = null;
+function shortenAddress(addr: string): string {
+  return addr.slice(0, 6) + "..." + addr.slice(-4);
+}
+
+
+function showLogoAtCorner() {
+  logoImg.classList.remove("logo-center");
+  logoImg.classList.add("logo-corner");
+}
+
+function showLogoAtCenter() {
+  logoImg.classList.remove("logo-corner");
+  logoImg.classList.add("logo-center");
+}
+
+showLogoAtCenter();
 // AI Provider 下拉框控制 key 显示
 aiProviderSelect.addEventListener("change", () => {
   openaiKeyBox.style.display = aiProviderSelect.value === "openai" ? "block" : "none";
 });
 
-// 🔗 点击连接钱包按钮
+// 🔗 click to connect te=he wallet btn
 connectBtn.addEventListener("click", async () => {
   try {
     const connectRes = await web3sdk.connect();
@@ -57,7 +76,7 @@ connectBtn.addEventListener("click", async () => {
     networkDisplay.textContent = Network.TESTNET;
     connectBtn.style.display = "none";
     walletInfo.style.display = "block";
-
+    showLogoAtCorner();
     const balance = await tsClient.viewEDSBalance(
       AccountAddress.fromString(connectedAddress)
     );
@@ -71,8 +90,7 @@ connectBtn.addEventListener("click", async () => {
   }
 });
 
-// 📋 点击复制地址按钮
-const copyConfirm = document.getElementById("copy-confirm")!;
+;
 
 copyBtn.addEventListener("click", async () => {
   if (!connectedAddress) return;
@@ -104,10 +122,9 @@ disconnectBtn.addEventListener("click", async () => {
   walletInfo.style.display = "none";
   connectBtn.style.display = "inline-block";
 });
+showLogoAtCenter();
 
-function shortenAddress(addr: string): string {
-  return addr.slice(0, 6) + "..." + addr.slice(-4);
-}
+
 
 // ✅ 获取交易记录
 async function loadRecentTransactions() {
@@ -167,9 +184,10 @@ async function generateReportText(balance: string, txs: any[]): Promise<string> 
 
 // 🎯 点击生成报告
 reportBtn.addEventListener("click", async () => {
+  
   if (!connectedAddress) return;
   reportResult.textContent = "📊 Generating report...";
-
+  console.log("🔍 Generating report for address:", connectedAddress);
   try {
     const balance = await tsClient.viewEDSBalance(AccountAddress.fromString(connectedAddress));
     const eds = (Number(balance) / 1e8).toFixed(4);
@@ -183,4 +201,9 @@ reportBtn.addEventListener("click", async () => {
     console.error("🔴 Report generation failed:", err);
     reportResult.textContent = "⚠️ Failed to generate report.";
   }
+});
+
+
+futureBtn.addEventListener("click", () => {
+  alert("🚧 Feature under construction!");
 });
