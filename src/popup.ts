@@ -16,7 +16,7 @@ const tsClient = new Endless(new EndlessConfig({ network: Network.TESTNET }));
 // DOM 元素获取
 const connectBtn = document.getElementById("connect-btn")!;
 const disconnectBtn = document.getElementById("disconnect-btn")!;
-const copyBtn = document.getElementById("copy-address")!;
+const copyBtn = document.getElementById("copy-address");
 const signBtn = document.getElementById("sign-message-btn")!;
 const walletInfo = document.getElementById("wallet-info")!;
 const walletAddressDisplay = document.getElementById("wallet-address")!;
@@ -31,7 +31,7 @@ const openaiKeyInput = document.getElementById("openai-key") as HTMLInputElement
 const openaiKeyBox = document.getElementById("openai-key-box")!;
 const logoImg = document.getElementById("logo")!;
 // 📋 点击复制地址按钮
-const copyConfirm = document.getElementById("copy-confirm")!
+const copyConfirm = document.getElementById("copy-confirm");
 // 从本地存储加载 OpenAI API key
 const savedOpenAIKey = localStorage.getItem("openai_api_key");
 if (savedOpenAIKey) {
@@ -88,18 +88,23 @@ connectBtn.addEventListener("click", async () => {
     console.error("🔴 Wallet connection failed:", err);
     alert("Failed to connect wallet.");
   }
+
 });
 
-;
-
-copyBtn.addEventListener("click", async () => {
-  if (!connectedAddress) return;
-  await navigator.clipboard.writeText(connectedAddress);
-  copyConfirm.style.display = "inline";
-  setTimeout(() => {
-    copyConfirm.style.display = "none";
-  }, 2000);
-});
+if (copyBtn) {
+  copyBtn.addEventListener("click", async () => {
+    if (!connectedAddress) return;
+    await navigator.clipboard.writeText(connectedAddress);
+    if (copyConfirm) {
+      copyConfirm.style.display = "inline";
+      setTimeout(() => {
+        if (copyConfirm) {
+          copyConfirm.style.display = "none";
+        }
+      }, 2000);
+    }
+  });
+}
 
 // 📝 签名消息
 signBtn.addEventListener("click", async () => {
