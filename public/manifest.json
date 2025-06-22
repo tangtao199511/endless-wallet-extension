@@ -3,7 +3,13 @@
   "name": "Endless Wallet",
   "version": "1.0",
   "description": "Login with Endless Wallet",
-  "permissions": [],
+  "permissions": ["storage", "scripting"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "host_permissions": [
+    "https://apibot.luffa.im/*"
+  ],
   "action": {
     "default_popup": "popup.html",
     "default_icon": {

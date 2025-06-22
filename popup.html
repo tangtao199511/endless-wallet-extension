@@ -7,34 +7,88 @@
   </head>
   <body>
     <div id="background">
-      <img src="./public/background.jpg" alt="Background Image" id="background-image" />
+      <img src="./public/dark_background.png" alt="Background Image" id="background-image" />
       <div id="background-overlay"></div>
     </div>
 
     <div id="app">
-      <img src="endless-logo.png" alt="Endless Logo" id="logo" class="logo" />
+      <div id="logo-container">
+        <img src="endless-logo_light.png" alt="Endless Logo" id="logo-center" class="logo logo-center" />
+
+        <img src="endless-logo_light.png" alt="Endless Logo" id="logo-corner" class="logo logo-corner hidden" />
+      </div>
+        <div>
+          <button id="settings-btn" class="btn-small hidden">⚙️</button>
+        </div>
       <h2>Endless Wallet</h2>
       <button id="connect-btn" class="btn">Connect Wallet</button>
 
       <div id="wallet-info" style="display: none;">
+        
+
+        <div id="settings-modal" class="modal hidden">
+        <div class="modal-content">
+          <h3>Settings</h3>
+
+          <div class="ai-section">
+          <label for="ai-provider" class="info-label">Select AI Provider:</label>
+          <select id="ai-provider">
+            <option value="openai">OpenAI</option>
+            <option value="ollama">Ollama (maintaining)</option>
+          </select>
+        </div>
+
+          <div id="openai-key-box">
+          <label for="openai-key" class="info-label">OpenAI API Key:</label>
+          <input id="openai-api-key" type="password" placeholder="sk-..." />
+          </div>
+
+          <div id="luffa-sk-box">
+          <label for="luffa-key" class="info-label">Luffa Bot SK:</label>
+          <input id="luffa-id-setting" type="password" placeholder="xxx" />
+          </div>
+
+          <div id="uid-box">
+          <label for="user-uid" class="info-label">Receiver UID:</label>
+          <input id="uid-of-the-user" type="password" placeholder="xxx" />
+          </div>
+
+          <div class="btn-grid">
+            <button id="save-settings-btn" class="btn">Save</button>
+            <button id="close-settings-btn" class="btn">Close</button>
+          </div>
+        </div>
+</div>
+
+
+
+
         <div class="info-card">
           <div class="info-row">
             <div>
-              <div class="info-label">Address 📋</div>
-              <div id="wallet-address">xxxxxxxxxx</div>
+              <div class="info-label">
+                Address <button id="copy-address" class="btn-small">📋</button>
+              <div class="clipboard-group">
             </div>
+              </div>
+              <div id="wallet-address">xxxxxxxxxx</div> 
+            </div>
+            
             <div>
               <div class="info-label">Network</div>
-              <div id="network">Testnet</div>
+              <div id="network">network</div>
             </div>
           </div>
           <div class="balance-section">
             <div class="info-label">Balance</div>
-            <div id="balance">10.0000 EDS</div>
+            <div class="balance-value">
+              <span id="balance">x.xxxx</span>
+              <span class="unit">EDS</span>
+            </div>
           </div>
         </div>
 
-        <hr class="divider" />
+        <!-- <hr class="divider" /> -->
 
         <div>
           <div class="section-title">Recent Transactions:</div>
@@ -43,20 +97,7 @@
           </div>
         </div>
 
-        <div class="ai-section">
-          <label for="ai-provider" class="info-label">Select AI Provider:</label>
-          <select id="ai-provider">
-            <option value="openai">OpenAI</option>
-            <option value="ollama">Ollama (maintaining)</option>
-          </select>
-        </div>
-
-        <div id="openai-key-box">
-          <label for="openai-key" class="info-label">OpenAI API Key:</label>
-          <input id="openai-key" type="password" placeholder="sk-..." />
-        </div>
-
-        <div id="report-result" class="report-box"></div>
+        
 
         <div class="btn-grid">
           <button id="generate-report-btn" class="btn">Send Report to Luffa Bot</button>
@@ -65,6 +106,8 @@
           <button id="disconnect-btn" class="btn">Disconnect</button>
         </div>
       </div>
+
+      <div id="report-result" class="report-box"></div>
 
     </div>
 
